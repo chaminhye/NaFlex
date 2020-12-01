@@ -24,9 +24,9 @@ https://goddaehee.tistory.com/category/3.%20%EC%9B%B9%EA%B0%9C%EB%B0%9C/3_1_3%20
 
 #### 🚩Spring Boot와 일반 Spring의 차이?
 
- ***\*- Spring Boot makes it easy to create stand-alone.\****  단독실행가능한 스프링애플리케이션을 생성한다.  
+ **- Spring Boot makes it easy to create stand-alone.**  단독실행가능한 스프링애플리케이션을 생성한다.  
 
-***\*- Most Spring Boot applications need very little Spring configuration.\****  Spring Boot는 최소한의 초기 스프링 구성으로 가능한 한 빨리 시작하고 실행할 수 있도록 설계되었다.
+**- Most Spring Boot applications need very little Spring configuration.**  Spring Boot는 최소한의 초기 스프링 구성으로 가능한 한 빨리 시작하고 실행할 수 있도록 설계되었다.
 
 
 
@@ -294,13 +294,13 @@ logging.level.com.god.bo.test.controller=debug
 
    ​				👉 src/test 하위에 테스트 대상 클래스와 동일한 클래스 패키지로 생성 ( /test 디렉토리 없는 경우 생성)
 
-     		     :interrobang: 쉽게 말하면,  빨간색 MemberVO파일과 노란색 MemberVOTest 파일의 패키지(com.example.naflex.jpaTest.vo)가 동일해야 한다!!
+     		     ❗쉽게 말하면,  빨간색 MemberVO파일과 노란색 MemberVOTest 파일의 패키지(com.example.naflex.jpaTest.vo)가 동일해야 한다!!
 
 
 
 ​			2.  모듈 설정
 
- 				 \- 위 이미지에서 test > java 폴더만 초록색으로 설정되어 있는데 다음과 같이 설정하면 된다. 
+​                  - 위 이미지에서 test > java 폴더만 초록색으로 설정되어 있는데 다음과 같이 설정하면 된다. 
 
 ​                  - File > Project Structure > Module' 로 가서 해당 디렉토리 선택 후 Mark as에서 'Tests'를 선택하고 적용한다. 
 
@@ -348,6 +348,8 @@ public class MemberVOTest {
     }
 }
 ```
+
+​			더 많은 어노테이션과 테스트는 소스코드 참고   ->  <a href="https://github.com/chaminhye/NaFlex/blob/study/src/test/java/com/example/naflex/jpaTest/vo/MemberVOTest.java">링크</a>
 
 
 
