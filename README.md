@@ -10,7 +10,15 @@ https://goddaehee.tistory.com/category/3.%20%EC%9B%B9%EA%B0%9C%EB%B0%9C/3_1_3%20
 
 해당 블로그가 많이 도움이 되었다. 
 
-![Image](C:\Users\mh\AppData\Local\Temp\Image.png)
+
+
+------
+
+**IDE tool** : intellij (개인적으로 git연동 프로젝트 - intellij / svn - eclipse 호환성이 좋은듯)
+
+**DB** : MariaDB
+
+![](D:\IDE\workspace\naflex\springboot.png)
 
 #### 🚩Spring Boot와 일반 Spring의 차이?
 
@@ -46,7 +54,11 @@ https://goddaehee.tistory.com/category/3.%20%EC%9B%B9%EA%B0%9C%EB%B0%9C/3_1_3%20
 
    * @RequestMapping (Spring 4.3이후)
 
-     ex) @RequestMapping(value="/login", method=@RequestMethod.GET)  ==  @GetMapping("/login")
+     ex) 🔔<u>@RequestMapping(value="/login", method=@RequestMethod.GET)  ==  @GetMapping("/login")</u> 
+
+     ​      RequestMethod.GET 뿐만 아니라, POST , PUT , DELETE도 동일하게 사용가능
+
+     ​      4.3이후에는 많이 사용되는 소스인 것 같다. 알아두면 편리하게 사용할듯 
 
    * @RequestParam
 
@@ -54,9 +66,9 @@ https://goddaehee.tistory.com/category/3.%20%EC%9B%B9%EA%B0%9C%EB%B0%9C/3_1_3%20
 
    * @PathValue 
 
-     ex) @RequestMapping("/member/{name}/{age}")
+     ex) @RequestMapping("/member/**{name}**/**{age}**")
 
-     ​       public String member(@PathVariable("name") String name, @PathVariable("age") String age)
+     ​       public String member(@PathVariable("**name**") String name, @PathVariable("**age**") String age)
 
    * consumes : RequestBody 타입 설정
 
@@ -64,7 +76,7 @@ https://goddaehee.tistory.com/category/3.%20%EC%9B%B9%EA%B0%9C%EB%B0%9C/3_1_3%20
 
    * @ResponseBody : view가 아닌 data를 반환하는 경우, ajax 통신에 주로쓰임
 
-   * @RestController  : @ResponseBody 추가할 필요 없이 ,@ResponseBody 기본적으로 활성화되어 있음
+   * <u>**@RestController**</u>  : @ResponseBody 추가할 필요 없이 ,@ResponseBody 기본적으로 활성화되어 있음
 
      - Spring 4.0이상은 @Controller와 @ResponseBody 어노테이션을 추가하는 것 대신 @RestController을 제공하다.
 
@@ -74,7 +86,7 @@ https://goddaehee.tistory.com/category/3.%20%EC%9B%B9%EA%B0%9C%EB%B0%9C/3_1_3%20
 
    :heavy_check_mark:**Thymeleaf Template** (view를 연결해주는 템플릿을 이용)
 
-   ​	기존의 tiles framework를 이용해봤으므로, 새로운 Thymeleaf Template을 이용해보자!
+   ​	기존의 tiles Template를 이용해봤으므로, 새로운 Thymeleaf Template을 이용해보자!
 
    - pom.xml 에서 Thymeleaf 를 이용할수 있게 의존성 추가
 
@@ -114,7 +126,17 @@ https://goddaehee.tistory.com/category/3.%20%EC%9B%B9%EA%B0%9C%EB%B0%9C/3_1_3%20
 
 ​		:heavy_check_mark:HikariCP
 
-​		    	    
+​			-	DataBase와의 Connection Pool을 관리(Connection Pool을 관리하는 라이브러리의 한 종류)
+
+​				-	미리 정해놓은 만큼의 커넥션을 Pool에 담아 놓는다. 
+
+​				-	요청이 들어오면 Thread가 커넥션을 요청하고 , Hikari는 Pool내에 있는 커넥션을 연결해준다.
+
+​				📣 단, 커넥션이 끝나더라도 해당 커넥션을 반납하지 않는다. Pool에 계속 살려둔다. 그러므로 설정값 주의필요!
+
+​		    	    *자세한 HikariCP 설정 👉[https://brunch.co.kr/@jehovah/24](https://brunch.co.kr/%40jehovah/24)*
+
+
 
 5. ### **Logback 설정(Spring boot)**
 
@@ -131,6 +153,8 @@ https://goddaehee.tistory.com/category/3.%20%EC%9B%B9%EA%B0%9C%EB%B0%9C/3_1_3%20
 
 ​		  TRACE < DEBUG < INFO < WARN < ERROR
 
+
+
 ​		 :heavy_check_mark: application.properties 설정
 
 ```properties
@@ -142,7 +166,9 @@ logging.level.com.god.bo.test=info
 logging.level.com.god.bo.test.controller=debug
 ```
 
-​		 :heavy_check_mark: logback-spring.xml 설정
+​		 
+
+​		:heavy_check_mark: logback-spring.xml 설정
 
 ​				**appender**와 **logger** 크게 두개로 구분
 
@@ -228,7 +254,7 @@ logging.level.com.god.bo.test.controller=debug
 
    ​		: 간단하게 말하자면, CRUD 반복되는 피하고자 함(컬럼 하나만 추가되더라도 DTO, DAO 등 추가작업이 많음)
 
-   ​        :warning:하지만, 업무환경에 따라 JPA를 적용할 수 없는 경우가 많다. (통계처리와 같은 복잡한 쿼리에 부적합)
+   ​        :warning:**하지만, 업무환경에 따라 JPA를 적용할 수 없는 경우가 많다. (통계처리와 같은 복잡한 쿼리에 부적합)**
 
    ​        
 
@@ -240,6 +266,25 @@ logging.level.com.god.bo.test.controller=debug
 
    :heavy_check_mark:JPA 설정
    
-   		*	pom.xml 설정
-   		*	Repository 클래스 설정
+   - pom.xml 설정	
+   - **Repository 클래스 설정** : Mapper 대신 사용
+   - Service , Controller 설정
+
+
+
+8. ### Junit 설정 및 실행
+
+   조금만 더 일찍 공부했었더라면,,, 아쉬움이 남는 부분이다.. 진작 공부할걸!!😭😭😭
+
+
+
+
+
+
+
+
+
+
+
+
 
