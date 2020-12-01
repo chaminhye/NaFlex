@@ -18,7 +18,9 @@ https://goddaehee.tistory.com/category/3.%20%EC%9B%B9%EA%B0%9C%EB%B0%9C/3_1_3%20
 
 **DB** : MariaDB
 
-![](D:\IDE\workspace\naflex\springboot.png)
+![](/src/main/resources/static/study/image/springboot.png)
+
+
 
 #### 🚩Spring Boot와 일반 Spring의 차이?
 
@@ -138,6 +140,8 @@ https://goddaehee.tistory.com/category/3.%20%EC%9B%B9%EA%B0%9C%EB%B0%9C/3_1_3%20
 
 
 
+
+
 5. ### **Logback 설정(Spring boot)**
 
    - Spring Boot의 기본 설정, 따로 별도의 라이브러리 추가할 필요 X
@@ -198,6 +202,8 @@ logging.level.com.god.bo.test.controller=debug
     ...
 </configuration>
 ```
+
+
 
 
 
@@ -276,15 +282,89 @@ logging.level.com.god.bo.test.controller=debug
 
    조금만 더 일찍 공부했었더라면,,, 아쉬움이 남는 부분이다.. 진작 공부할걸!!😭😭😭
 
+   
+
+   :heavy_check_mark:Junit 설정하기
+
+   ​		1.	test 디렉토리 설정하기
+
+   ![](/src/main/resources/static/study/image/juint.png)
+
+   
+
+   ​				👉 src/test 하위에 테스트 대상 클래스와 동일한 클래스 패키지로 생성 ( /test 디렉토리 없는 경우 생성)
+
+     		     :interrobang: 쉽게 말하면,  빨간색 MemberVO파일과 노란색 MemberVOTest 파일의 패키지(com.example.naflex.jpaTest.vo)가 동일해야 한다!!
 
 
 
+​			2.  모듈 설정
+
+ 				 \- 위 이미지에서 test > java 폴더만 초록색으로 설정되어 있는데 다음과 같이 설정하면 된다. 
+
+​                  - File > Project Structure > Module' 로 가서 해당 디렉토리 선택 후 Mark as에서 'Tests'를 선택하고 적용한다. 
+
+​                  - Test Source Folders로 지정이 되면 아래와 같이 초록색 폴더로 바뀐다.
+
+ 		  
+
+​			3.  TestClass 생성
+
+​				  - MemberVO.class  > 클래스명 위에다가 우클릭 Create Test click!
+
+​                  - Testing Library  : Junit설정 / 아래 Generate test method는 필요한거 선택가능
 
 
 
+​			4. :star:**Test code 작성:star:**				                  
+
+​				1) 테스트 클래스는 반드시 public으로 선언해야 한다.
+
+​				2) 클래스명은 관례상 테스트클래명 + Test 끝나는 이름으로 사용 한다.
+
+​				3) @Test 어노테이션을 선언한 메서드는 JUnit이 알아서 실행 할 수 있게 한다.
+
+```java
+public class MemberVOTest {
+
+    @Test
+    public void getId() {
+        final MemberVO memberVO = MemberVO.builder()
+                                          .id("mhcha")
+                                          .name("민혜")
+                                          .build();
+        final String id = memberVO.getId();
+        assertEquals("mhcha", id);
+    }
+
+    @Test
+    public void getName(){
+        final MemberVO memberVO = MemberVO.builder()
+                                          .id("mhcha")
+                                          .name("민혜")
+                                          .build();
+        final String name = memberVO.getName();
+        assertEquals("차민혜", name);
+    }
+}
+```
 
 
 
+​			5. Test method run
 
+​                - 원하는 메소드 우클릭해서 실행가능 
 
+​                  ex)  getId()  > 우클릭  run getId() > 결과 Tests passed 
 
+​                         getName()  > 우클릭  run getName() > 결과 Tests failed
+
+​                - 전체 메소드 우클릭해서 전체 메소드 실행가능 
+
+​                  ex)  MemberVOTest  > 우클릭  run MemberVOTest > 결과  1 Tests passed  / 1 Tests failed
+
+​                 
+
+​             6. Junit method
+
+​                참고 : http://junit.sourceforge.net/javadoc/org/junit/Assert.html
