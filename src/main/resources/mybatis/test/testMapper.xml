@@ -4,4 +4,8 @@
     <select id="selectTest" resultType="TestVO">
         SELECT 'GOD' AS NAME
     </select>
+
+    <select id="selectOneMember" resultType="String">
+        SELECT 'GOD' AS NAME
+    </select>
 </mapper>

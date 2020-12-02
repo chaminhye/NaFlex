@@ -10,4 +10,5 @@ import java.util.List;
 public interface TestMapper {
 
     List<TestVO> selectTest();
+    TestVO selectOneMember(String id);
 }
