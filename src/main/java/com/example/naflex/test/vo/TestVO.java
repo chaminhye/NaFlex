@@ -1,6 +1,8 @@
 package com.example.naflex.test.vo;
 
 
+import lombok.Builder;
+
 public class TestVO {
 
 //    private Long mbrNo;
@@ -11,6 +13,7 @@ public class TestVO {
 
     }
 
+    @Builder
     public TestVO(String id, String name){
         this.id = id;
         this.name = name;

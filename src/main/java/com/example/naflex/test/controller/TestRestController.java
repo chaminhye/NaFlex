@@ -1,9 +1,9 @@
 package com.example.naflex.test.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.naflex.test.service.TestService;
+import com.example.naflex.test.vo.TestVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -12,6 +12,8 @@ import java.util.List;
 @RestController
 public class TestRestController {
 
+    @Autowired
+    private TestService testService;
     /**
      *      Spring 4.0 버전 이상부터
      *      - @Controller + @ResponseBody 대신 @RestController 이용가능
@@ -22,10 +24,15 @@ public class TestRestController {
      *      - @RequestMapping(value="/testValue", method= RequestMethod.GET)
      * */
 
-//    @GetMapping(value="/testValue")
-    @RequestMapping(value="/testValue", method= RequestMethod.GET)
+    @GetMapping(value="/testValue")
+//    @RequestMapping(value="/testValue", method= RequestMethod.GET)
     public String getTestValue(){
         return "RESTController test";
+    }
+
+    @GetMapping(value="/testValue2")
+    public TestVO getTestValue2(@RequestParam String id){
+        return testService.selectOneMember(id);
     }
 
 
