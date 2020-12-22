@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.naflex.user.mapper.UserMapper">
+
+    <insert id="insertUser">
+        INSERT
+          INTO USER(
+               user_name
+             , password
+             , first_name
+             , last_name
+             , age
+             , salary
+             ) VALUES (
+               #{user_name}
+             , #{password}
+             , #{first_name}
+             , #{last_name}
+             , #{age}
+             , #{salary}
+             )
+    </insert>
+
+    <select id="userList" resultType="com.example.naflex.user.vo.UserVO">
+        SELECT *
+          FROM user
+         ORDER BY user_id
+    </select>
+
+    <select id="fetchUserByID" resultType="com.example.naflex.user.vo.UserVO" parameterType="int">
+        SELECT *
+          FROM user
+         WHERE user_id = #{user_id}
+    </select>
+
+    <select id="deleteUser" parameterType="int">
+        DELETE
+          FROM user
+         WHERE user_id = #{user_id}
+    </select>
+
+    <update id="updateUser" parameterType="com.example.naflex.user.vo.UserVO">
+        UPDATE user
+           SET first_name = #{first_name}
+             , last_name = #{last_name}
+             , age = #{age}
+             , salary = #{salary}
+         WHERE user_id = #{user_id}
+    </update>
+
+</mapper>
