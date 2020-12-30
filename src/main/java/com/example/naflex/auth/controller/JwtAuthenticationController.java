@@ -5,7 +5,12 @@ import com.example.naflex.auth.member.Member;
 import com.example.naflex.auth.service.JwtUserDetailsService;
 import com.example.naflex.auth.vo.JwtReqVO;
 import com.example.naflex.auth.vo.JwtResVO;
+import org.apache.commons.logging.Log;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +34,12 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtUserDetailsService userDetailService;
 
-    @PostMapping("/authenticate")
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtReqVO authenticationRequest) throws Exception {
+        logger.error("::: member {}",authenticationRequest);
+
         final Member member = userDetailService.authenticateByEmailAndPassword
                 (authenticationRequest.getEmail(), authenticationRequest.getPassword());
         final String token = jwtTokenUtil.generateToken(member.getEmail());

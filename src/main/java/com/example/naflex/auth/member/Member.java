@@ -8,24 +8,26 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(of = "uid")
-@Entity(name="user")      // JPA가 관리하는 클래스
+@Entity(name="member")      // JPA가 관리하는 클래스
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, name="email")
     private String email;
+
+    @Column(name="password")
     private String password;
 
     public Member(String email, String password) {
         this.email = email;
         this.password = password;
     }
-
-    public static Member createMember(String email, String password) {
-        return new Member(email,password);
-    }
+//
+//    public static Member createMember(String email, String password) {
+//        return new Member(email,password);
+//    }
 }

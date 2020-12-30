@@ -11,13 +11,13 @@ import java.io.Serializable;
  *  JwtReqVO 역할
  *      -> 사용자에게 받은 username, password를 저장
  * */
-@JsonIgnoreProperties(ignoreUnknown =  true)
-@Accessors(chain=true)
+//@JsonIgnoreProperties(ignoreUnknown =  true)
+//@Accessors(chain=true)
 @Data
 public class JwtReqVO implements Serializable {
-    @JsonIgnore
+//    @JsonIgnore
     private String email;
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
 
     //need default constructor for JSON Parsing

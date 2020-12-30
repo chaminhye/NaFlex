@@ -1,9 +1,9 @@
-package com.example.naflex.user.vo;
+package com.example.naflex.auth.member;
 
 import lombok.Data;
 
 @Data
-public class UserVO {
+public class MemberVO {
     private String email;
     private String password;
 }
