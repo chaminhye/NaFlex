@@ -56,7 +56,7 @@ public class JwtAuthenticationController {
 
     @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtReqVO authenticationRequest) throws Exception {
-        logger.error("::: member {}",authenticationRequest);
+        logger.error("createAuthenticationToken::: member {}",authenticationRequest);
 
         final Member member = userDetailService.authenticateByEmailAndPassword
                 (authenticationRequest.getEmail(), authenticationRequest.getPassword());
@@ -77,20 +77,30 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(new JwtResVO(token));
     }
 
-    @GetMapping("/api/saveMember")
-    public ResponseEntity<Member> saveMember(HttpServletRequest req, @RequestBody Member member) {
-        member.setPassword(encode.encode(member.getPassword()));
-        Member mem = memberRepository.findByEmail(member.getEmail()).orElse(null);
+    @GetMapping(value="/api/saveMember")
+    public ResponseEntity<?> saveMember(@RequestParam(value="email", required = false) String email
+                                        , @RequestParam(value="password", required = false) String password){
+        logger.error("saveMember::: email {}",email);
+        logger.error("saveMember::: password {}",password);
+        String result = "ERROR";
+        try{
+            Member member = memberRepository.findByEmail(email).orElse(null);
 
-        // 전달받은 email이 없는 경우만 회원가입
-        if(mem == null){
-            mem = memberRepository.save(member);
-            // 기본 사용자 추가
-            User user = new User("user", mem.getIdx());
-            userRepository.save(user);
+            // 전달받은 email이 없는 경우만 회원가입
+            if(member == null){
+                Member memberData = new Member(email, encode.encode(password));
+                Member newMember = memberRepository.save(memberData);
+                // 기본 사용자 추가
+                User user = new User("user", newMember.getIdx());
+                userRepository.save(user);
+                result = "OK";
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         // 회원가입시 member, member_user에도 insert 기본사용자
-        return new ResponseEntity<Member>(mem, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
 
