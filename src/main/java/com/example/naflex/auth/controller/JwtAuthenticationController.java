@@ -3,10 +3,10 @@ package com.example.naflex.auth.controller;
 import com.example.naflex.auth.config.JwtTokenUtil;
 import com.example.naflex.auth.member.Member;
 import com.example.naflex.auth.member.MemberRepository;
+import com.example.naflex.auth.member.user.User;
 import com.example.naflex.auth.member.user.UserRepository;
 import com.example.naflex.auth.service.CookieUtil;
 import com.example.naflex.auth.service.JwtUserDetailsService;
-import com.example.naflex.auth.member.user.User;
 import com.example.naflex.auth.vo.JwtReqVO;
 import com.example.naflex.auth.vo.JwtResVO;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +18,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -63,8 +65,13 @@ public class JwtAuthenticationController {
 
         // accessToken과 refreshToken을 생성성
        final String token = jwtTokenUtil.generateToken(member);
-        final String refreshJwt = jwtTokenUtil.generateRefreshToken(member);
+       final String refreshJwt = jwtTokenUtil.generateRefreshToken(member);
 
+       List<User> userList = new ArrayList<>();
+       // token이 정상적으로 발생되었다면, 사용자 리스트 조회하여 같이 반환
+       if(!StringUtils.isEmpty(token)){
+            userList = userRepository.findBymemberIdOrderBySorting(member.getIdx());
+       }
         Cookie accessToken = cookieUtil.createCookie(jwtTokenUtil.ACCESS_TOKEN_NAME, token);
         Cookie refreshToekn = cookieUtil.createCookie(jwtTokenUtil.REFRESH_TOKEN_NAME, refreshJwt);
 
@@ -73,8 +80,7 @@ public class JwtAuthenticationController {
 //        res.addCookie(accessToken);
 //        res.addCookie(refreshToken);
 
-
-        return ResponseEntity.ok(new JwtResVO(token));
+        return ResponseEntity.ok(new JwtResVO(token, userList));
     }
 
     @GetMapping(value="/api/saveMember")

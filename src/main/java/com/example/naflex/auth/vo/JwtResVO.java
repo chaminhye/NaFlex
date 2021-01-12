@@ -1,8 +1,10 @@
 package com.example.naflex.auth.vo;
 
+import com.example.naflex.auth.member.user.User;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *  JwtResVO의 역할
@@ -11,10 +13,12 @@ import java.io.Serializable;
 @Data
 public class JwtResVO implements Serializable {
 
-    private final String jwttoken;
+    private String jwttoken;
+    private List<User> userList;
 
-    public JwtResVO(String jwttoken) {
+    public JwtResVO(String jwttoken, List<User> userList) {
         this.jwttoken = jwttoken;
+        this.userList = userList;
     }
 
 }
