@@ -9,6 +9,9 @@ import com.example.naflex.auth.service.CookieUtil;
 import com.example.naflex.auth.service.JwtUserDetailsService;
 import com.example.naflex.auth.vo.JwtReqVO;
 import com.example.naflex.auth.vo.JwtResVO;
+import com.example.naflex.common.util.JsonUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +25,9 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.Cookie;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -43,13 +48,13 @@ public class JwtAuthenticationController {
     private JwtUserDetailsService userDetailService;
 
     @Autowired
-    final MemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
-    final UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    final PasswordEncoder encode;
+    private PasswordEncoder encode;
 
     @Autowired
     private CookieUtil cookieUtil;
@@ -70,7 +75,7 @@ public class JwtAuthenticationController {
        List<User> userList = new ArrayList<>();
        // token이 정상적으로 발생되었다면, 사용자 리스트 조회하여 같이 반환
        if(!StringUtils.isEmpty(token)){
-            userList = userRepository.findBymemberIdOrderBySorting(member.getIdx());
+           userList = userRepository.findBymemberIdOrderBySorting(member.getIdx());
        }
         Cookie accessToken = cookieUtil.createCookie(jwtTokenUtil.ACCESS_TOKEN_NAME, token);
         Cookie refreshToekn = cookieUtil.createCookie(jwtTokenUtil.REFRESH_TOKEN_NAME, refreshJwt);

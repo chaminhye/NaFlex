@@ -14,11 +14,11 @@ import java.util.List;
 public class JwtResVO implements Serializable {
 
     private String jwttoken;
-    private List<User> userList;
+    private List<User> users;
 
-    public JwtResVO(String jwttoken, List<User> userList) {
+    public JwtResVO(String jwttoken, List<User> users) {
         this.jwttoken = jwttoken;
-        this.userList = userList;
+        this.users = users;
     }
 
 }
