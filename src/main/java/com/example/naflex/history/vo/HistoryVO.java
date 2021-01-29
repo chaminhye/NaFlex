@@ -24,4 +24,9 @@ public class HistoryVO {
     @Column(name="view_time")
     private String viewTime;
 
+    @Column(name="view_complete")
+    private String complete;
+
+    @Column(name="vod_img")
+    private String vodImg;
 }
